@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moviequote/models/quote.dart';
 import 'package:moviequote/services/api.dart';
 import 'package:moviequote/services/stream_quote.dart';
+import 'package:moviequote/widgets/button_refresh.dart';
 import 'package:moviequote/widgets/quote_item.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -36,7 +37,15 @@ class _HomeScreenState extends State<HomeScreen> {
         if(snapshot.connectionState == ConnectionState.done)
           if(snapshot.data != null)
             if(!snapshot.data!.error)
-              return QuoteItem(snapshot.data!);
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  QuoteItem(snapshot.data!),
+                  ButtonRefresh(onPress: (){
+                    sq.sink().add(null);
+                  }),
+                ],
+              );
             else sq.sink().add(null);
           else refresh();
         return CircularProgressIndicator();
