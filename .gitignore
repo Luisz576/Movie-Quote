@@ -1,0 +1,11 @@
+*/android/
+*/.idea/
+*/.dart_tool/
+*/pubspec.lock
+*/moviequote.iml
+*/.packages
+*/.metadata
+*/web/
+*/android/
+*/ios/
+*/test/
