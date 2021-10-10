@@ -9,7 +9,7 @@ class Quote{
     author = map["role"];
   }
 
-  Quote.Error(){
+  Quote.error(){
     error = true;
     quote = "";
     author = "";

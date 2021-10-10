@@ -15,7 +15,7 @@ class StreamQuote{
   }
 
   close(){
-    _streamController.sink.close();
+    _streamController.close();
   }
 
 }

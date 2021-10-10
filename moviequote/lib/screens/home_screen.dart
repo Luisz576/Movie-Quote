@@ -25,7 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   _HomeScreenState(this.sq);
 
-  refresh() async{
+  void refresh() async{
+    print("refresh");
     sq.sink().add(await Api.getQuote());
   }
 
@@ -34,21 +35,23 @@ class _HomeScreenState extends State<HomeScreen> {
     return StreamBuilder<Quote?>(
       initialData: null,
       builder: (context, snapshot){
-        if(snapshot.connectionState == ConnectionState.done)
-          if(snapshot.data != null)
-            if(!snapshot.data!.error)
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  QuoteItem(snapshot.data!),
-                  ButtonRefresh(onPress: (){
-                    sq.sink().add(null);
-                  }),
-                ],
-              );
-            else sq.sink().add(null);
-          else refresh();
-        return CircularProgressIndicator();
+        if(snapshot.data != null){
+          if(!snapshot.data!.error)
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                QuoteItem(snapshot.data!),
+                SizedBox(height: 20),
+                ButtonRefresh(onPress: (){
+                  sq.sink().add(null);
+                }),
+              ],
+            );
+          else sq.sink().add(null);
+        }else refresh();
+        return Center(
+          child: CircularProgressIndicator(),
+        );
       },
       stream: sq.stream(),
     );
